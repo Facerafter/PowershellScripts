@@ -1,7 +1,7 @@
-﻿$EmailServer = "vanwijk-exch01.evanwijk.local"
-$EmailFrom = "info@evanwijk.com"
-$EmailTo = "ict@evanwijk.com"
-$ServerList = "C:\servers.txt"
+﻿$EmailServer = ""
+$EmailFrom = ""
+$EmailTo = ""
+$ServerList = ""
 $Warning = 20
 $Critical = 10
 
