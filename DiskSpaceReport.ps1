@@ -9,7 +9,6 @@ $script:list = $ServerList
 $freeSpaceFileName = "C:\FreeSpace.htm"
 New-Item -ItemType file $freeSpaceFileNAme -Force
 
-
 Function writeHtmlHeader
 {
     param($fileName)
@@ -143,5 +142,3 @@ $body = Get-Content $freeSpaceFileName -Raw
 $smtp = new-object Net.Mail.SmtpClient($EmailServer)
 $date = ( get-date ).ToString(‘dd/MM/yyyy')
 Send-MailMessage -from $EmailFrom -to $EmailTo -subject "Disk Space Report - $Date" -SmtpServer $EmailServer -attachment $freeSpaceFileName -BodyAsHtml -Body ( $body| out-string)
-
-
