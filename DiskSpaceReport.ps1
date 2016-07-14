@@ -1,13 +1,14 @@
-$EmailServer = "vanwijk-exch01.evanwijk.local"
-$EmailFrom = "info@evanwijk.com"
-$EmailTo = "ict@evanwijk.com"
-$ServerList = "C:\servers.txt"
+$EmailServer = ""
+$EmailFrom = ""
+$EmailTo = ""
+$ServerList = ""
 $Warning = 20
 $Critical = 10
 $tableRow = 1
-$script:list = $ServerList
+$serverList = 
 $freeSpaceFileName = "C:\FreeSpace.htm"
 New-Item -ItemType file $freeSpaceFileNAme -Force
+
 
 Function writeHtmlHeader
 {
@@ -112,7 +113,7 @@ Function writeDiskInfo
 }
 
 writeHtmlHeader $freeSpaceFileName
-foreach ($server in Get-Content $script:list)
+foreach ($server in $serverList)
 {
     if(Test-Connection -ComputerName $server -Count 1 -ea 0) 
     {
