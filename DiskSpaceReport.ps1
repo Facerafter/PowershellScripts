@@ -1,14 +1,5 @@
-$EmailServer = ""
-$EmailFrom = ""
-$EmailTo = ""
-$ServerList = ""
-$Warning = 20
-$Critical = 10
-$tableRow = 1
-$serverList = 
 $freeSpaceFileName = "C:\FreeSpace.htm"
 New-Item -ItemType file $freeSpaceFileNAme -Force
-
 
 Function writeHtmlHeader
 {
@@ -36,10 +27,10 @@ Function writeHtmlHeader
     Add-Content $fileName "}"
     Add-Content $fileName "th { "
     Add-Content $fileName "background-color: #3399ff;"
-    Add-Content $fileName "color: #f2f2f2;"
+    Add-Content $fileName "color: #ffffff;"
     Add-Content $fileName "}"
     Add-Content $fileName "tbody tr:nth-child(odd) {"
-    Add-Content $fileName "background-color: #cccccc;"
+    Add-Content $fileName "background-color: #e6e6e6;"
     Add-Content $fileName "}"
     Add-Content $fileName "</style>"
     Add-Content $fileName "</head>"
