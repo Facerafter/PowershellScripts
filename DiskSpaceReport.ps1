@@ -1,3 +1,9 @@
+$EmailServer = ""
+$EmailFrom = ""
+$EmailTo = ""
+$ServerList = ""
+$Warning = 20
+$Critical = 10
 $freeSpaceFileName = "C:\FreeSpace.htm"
 New-Item -ItemType file $freeSpaceFileNAme -Force
 
@@ -113,15 +119,12 @@ foreach ($server in $serverList)
         Add-Content $freeSpaceFileName "<tr>"
         Add-Content $freeSpaceFileName "<th width='100%' align='center' colSpan=6><font face='tahoma' size='2′><strong> $server </strong></font></th>"
         Add-Content $freeSpaceFileName "</tr>"
-
         writeTableHeader $freeSpaceFileName
-
         $dp = Get-WmiObject win32_logicaldisk -ComputerName $server | Where-Object {$_.drivetype -eq 3 }
         foreach ($item in $dp)
         {
             Write-Host $item.DeviceID $item.VolumeName $item.FreeSpace $item.Size
             WriteDiskInfo $freeSpaceFileName $item.DeviceID $item.VolumeName $item.FreeSpace $item.Size
-
         }
     }
     Add-Content $freeSpaceFileName "</tbody>"
