@@ -44,7 +44,7 @@ Function writeHtmlHeader
     Add-Content $fileName "</style>"
     Add-Content $fileName "</head>"
     Add-Content $fileName "<body>"
-    Add-Content $fileName "<font face='tahoma' col size='4′><strong><center>DiskSpace Report – $date</center></strong></font>"
+    Add-Content $fileName "<font face='tahoma' col size='4′><strong><center>DiskSpace Report - $date</center></strong></font>"
     Add-Content $fileName "<br>"
 }
 
@@ -143,3 +143,5 @@ $body = Get-Content $freeSpaceFileName -Raw
 $smtp = new-object Net.Mail.SmtpClient($EmailServer)
 $date = ( get-date ).ToString(‘dd/MM/yyyy')
 Send-MailMessage -from $EmailFrom -to $EmailTo -subject "Disk Space Report - $Date" -SmtpServer $EmailServer -attachment $freeSpaceFileName -BodyAsHtml -Body ( $body| out-string)
+
+
