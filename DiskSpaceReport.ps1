@@ -1,10 +1,10 @@
-﻿$EmailServer = ""
-$EmailFrom = ""
-$EmailTo = ""
-$ServerList = ""
+$EmailServer = "vanwijk-exch01.evanwijk.local"
+$EmailFrom = "info@evanwijk.com"
+$EmailTo = "ict@evanwijk.com"
+$ServerList = "C:\servers.txt"
 $Warning = 20
 $Critical = 10
-
+$tableRow = 1
 $script:list = $ServerList
 $freeSpaceFileName = "C:\FreeSpace.htm"
 New-Item -ItemType file $freeSpaceFileNAme -Force
@@ -35,7 +35,6 @@ Function writeHtmlHeader
     Add-Content $fileName "padding: 5px;"
     Add-Content $fileName "}"
     Add-Content $fileName "th { "
-    Add-Content $fileName "border-bottom: thin solid #ddd;"
     Add-Content $fileName "background-color: #3399ff;"
     Add-Content $fileName "color: #f2f2f2;"
     Add-Content $fileName "}"
@@ -140,35 +139,7 @@ foreach ($server in Get-Content $script:list)
 }
 
 writeHtmlFooter $freeSpaceFileName
-Function sendEmail
-{
-    param($from,$to,$subject,$smtphost,$htmlFileName)
-    [string]$receipients="$EmailTo"
-    $body = Get-Content $htmlFileName
-    $body = New-Object System.Net.Mail.MailMessage $EmailFrom, $receipients, $subject, $body
-    $body.IsBodyHTML = $true
-    $EmailServer = $MailServer
-    $smtp = new-object Net.Mail.SmtpClient($smtphost)
-    $validfrom= Validate-IsEmail $EmailFrom
-    if($validfrom -eq $TRUE)
-    {
-        $validTo= Validate-IsEmail $EmailTo
-        if($validTo -eq $TRUE)
-        {
-            $smtp.Send($body)
-            write-output "Email Sent!!"
-
-        }
-    }
-    else
-    {
-        write-output "Invalid entries, Try again!!"
-    }
-}
-
-function Validate-IsEmail ([string]$Email)
-{
-    return $Email -match "^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$"
-}
+$body = Get-Content $freeSpaceFileName -Raw
+$smtp = new-object Net.Mail.SmtpClient($EmailServer)
 $date = ( get-date ).ToString(‘dd/MM/yyyy')
-sendEmail -from $EmailFrom -to $EmailTo -subject "Disk Space Report – $Date" -smtphost $EmailServer -htmlfilename $freeSpaceFileName
+Send-MailMessage -from $EmailFrom -to $EmailTo -subject "Disk Space Report - $Date" -SmtpServer $EmailServer -attachment $freeSpaceFileName -BodyAsHtml -Body ( $body| out-string)
