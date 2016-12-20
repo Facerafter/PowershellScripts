@@ -1,3 +1,8 @@
+# Quick install
+#cd /tmp
+#wget --quiet --no-check-certificate -O pia.shhttps://raw.githubusercontent.com/Facerafter/UsefulScripts/master/FreeNAS/pia.sh
+#chmod +x pia.sh
+#./pia.sh
 #!/bin/tcsh
 
 # Grab user information.
